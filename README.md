@@ -23,18 +23,18 @@ If `destination` already has a file with the same name, it will remain untouched
 
 ## Concrete example
 
-Suppose webpack was executed and we now have a bunch of new files:
+Suppose the destination directory looks like this:
 ```
-/path1/app.123.js
-/path1/lib.456.js
-/path2/app.789.css
+/public/app.123.js
+/public/lib.456.js
+/public/app.789.css
 ```
 
-The destination directory looks like this:
+After webpack is executed we have a bunch of new files:
 ```
-/public/app.321.js
-/public/lib.456.js
-/public/app.987.css
+/path1/app.321.js
+/path1/lib.456.js
+/path2/app.987.css
 ```
 
 After calling
@@ -46,18 +46,18 @@ FileJanitor.clean({
 });
 ```
 the new files will be copied to the destination directory and the old files will be deleted. That is:
-- `/path1/app.123.js` will be copied to `/public`
-- `/public/app.321.js` will be deleted
+- `/path1/app.321.js` will be copied to `/public`
+- `/public/app.123.js` will be deleted
 - `/path1/lib.456.js` will NOT be copied to `/public`
 - `/public/lib.456.js` will remain untouched
-- `/path1/app.789.css` will be copied to `/public`
-- `/public/app.987.css` will be deleted
+- `/path1/app.987.css` will be copied to `/public`
+- `/public/app.789.css` will be deleted
 
-That is, the destination directory will be:
+That is, the destination directory will now be:
 ```
-/public/app.123.js    <-- new file
+/public/app.321.js    <-- new file
 /public/lib.456.js    <-- same file, was not touched
-/public/app.789.css   <-- new file
+/public/app.987.css   <-- new file
 ```
 
 **IMPORTANT NOTE:** we assume files are 'new' and 'old' only by taking into account that they have the same prefix and different hashes (as well as being in different directories).
